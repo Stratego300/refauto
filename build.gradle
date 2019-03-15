@@ -55,8 +55,8 @@ dependencyManagement {
 
 defaultTasks 'bootRun'
 
-group = 'nc.opt.refauto'
-version = '0.0.1-SNAPSHOT'
+
+
 
 description = ''
 
@@ -164,6 +164,9 @@ configurations {
 
 repositories {
     mavenLocal()
+    maven { url "https://artifactory.intranet.opt/artifactory/libs-release/" }
+    maven { url "https://artifactory.intranet.opt/artifactory/libs-snapshot/" }
+    maven { url "https://github.com/Stratego300/artifacts/raw/master/mvn/" }
     mavenCentral()
     jcenter()
     //jhipster-needle-gradle-repositories - JHipster will add additional repositories
@@ -248,6 +251,7 @@ dependencies {
     testCompile "com.mattbertolini:liquibase-slf4j"
     testCompile "org.hamcrest:hamcrest-library"
     testCompile "com.h2database:h2"
+    compile group: 'nc.opt.core', name: 'opt-logging', version: opt_logging_version
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

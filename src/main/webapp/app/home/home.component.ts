@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { LoginModalService, AccountService, Account } from 'app/core';
+import { BG_COUNT } from '../shared';
+import { Account, AccountService } from 'app/core';
 
 @Component({
     selector: 'jhi-home',
@@ -11,18 +11,12 @@ import { LoginModalService, AccountService, Account } from 'app/core';
 })
 export class HomeComponent implements OnInit {
     account: Account;
-    modalRef: NgbModalRef;
 
-    constructor(
-        private accountService: AccountService,
-        private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
-    ) {}
+    randomImage = Math.floor(Math.random() * BG_COUNT) + 1;
+
+    constructor(private accountService: AccountService, private eventManager: JhiEventManager) {}
 
     ngOnInit() {
-        this.accountService.identity().then((account: Account) => {
-            this.account = account;
-        });
         this.registerAuthenticationSuccess();
     }
 
@@ -36,9 +30,5 @@ export class HomeComponent implements OnInit {
 
     isAuthenticated() {
         return this.accountService.isAuthenticated();
-    }
-
-    login() {
-        this.modalRef = this.loginModalService.open();
     }
 }

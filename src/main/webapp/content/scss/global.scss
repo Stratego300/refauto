@@ -224,3 +224,147 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+/* ==========================================================================
+Overall modifications for layout with footer
+========================================================================== */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 40px;
+    &::after {
+        content: '';
+        background: url('../images/background.png');
+        opacity: 0.5;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.container-fluid {
+    padding-bottom: 60px;
+    .card {
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        border: none;
+        .fa-bg {
+            position: absolute;
+            display: block;
+            font-size: 400px;
+            right: 0;
+            opacity: 0.15;
+            bottom: -100px;
+        }
+    }
+}
+
+.btn {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.6);
+}
+
+.btn-group .btn,
+.input-group .btn,
+ng-select .btn {
+    box-shadow: none;
+}
+
+.footer {
+    background: #353d47 !important;
+    color: white;
+    border: none;
+}
+
+.home-container {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: -1.6% !important;
+    min-height: 800px;
+    position: relative;
+    .home-content {
+        padding: 20px 0;
+        width: 100%;
+        margin: auto;
+        background: rgba(30, 30, 30, 0.6);
+        text-align: center;
+        .home-images {
+            .home-text-big {
+                color: #fff;
+                font-size: 25px;
+                margin-top: 10px;
+                text-shadow: 0px 2px 5px black;
+            }
+            .home-text-small {
+                color: #fff;
+                font-size: 15px;
+                margin-top: 10px;
+                text-shadow: 0px 2px 5px black;
+                padding: 0 20px;
+            }
+            .row {
+                max-width: 1000px;
+                margin: auto !important;
+                a {
+                    color: white;
+                    text-shadow: 0px 2px 5px black;
+                    text-decoration: none;
+                    img {
+                        height: 120px;
+                        transition: transform 0.1s ease-in-out;
+                        padding-bottom: 8px;
+                        filter: drop-shadow(0px 2px 5px #222);
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+                    span {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.login-container {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: -1.6%;
+    min-height: 800px;
+    position: relative;
+    .card {
+        background: rgba(30, 30, 30, 0.6);
+        color: white;
+        .card-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        .card-block {
+            min-width: 600px;
+            margin: 0 auto;
+        }
+    }
+}
+
+.bg1 {
+    background-image: url('../images/bg1.jpg');
+}
+.bg2 {
+    background-image: url('../images/bg2.jpg');
+}
+.bg3 {
+    background-image: url('../images/bg3.jpg');
+}
+.bg4 {
+    background-image: url('../images/bg4.jpg');
+}
+.bg5 {
+    background-image: url('../images/bg5.jpg');
+}

@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-
-import { SERVER_API_URL } from 'app/app.constants';
+import { ConfigurationService } from '../configuration/configuration.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
-    constructor(private http: HttpClient, private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService) {}
+    constructor(
+        private http: HttpClient,
+        private $localStorage: LocalStorageService,
+        private $sessionStorage: SessionStorageService,
+        private configurationService: ConfigurationService
+    ) {}
 
     getToken() {
         return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
     }
 
     login(credentials): Observable<any> {
-        const data = {
-            username: credentials.username,
-            password: credentials.password,
-            rememberMe: credentials.rememberMe
-        };
-        return this.http.post(SERVER_API_URL + 'api/authenticate', data, { observe: 'response' }).pipe(map(authenticateSuccess.bind(this)));
+        if (this.configurationService.get('security-type') === 'local') {
+            this.storeAuthenticationToken(credentials.username, credentials.rememberMe);
+            return of(credentials.username);
+        } else {
+            const url = this.configurationService.get('auth-url');
+
+            if (credentials.username) {
+                const data = {
+                    username: credentials.username,
+                    password: credentials.password,
+                    rememberMe: credentials.rememberMe
+                };
+                return this.http.post(url, data, { observe: 'response', responseType: 'text' }).pipe(map(authenticateSuccess.bind(this)));
+            } else {
+                return this.http
+                    .get(url, { observe: 'response', responseType: 'text', withCredentials: true })
+                    .pipe(map(authenticateSuccess.bind(this)));
+            }
+        }
 
         function authenticateSuccess(resp) {
             const bearerToken = resp.headers.get('Authorization');

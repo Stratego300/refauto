@@ -33,5 +33,10 @@
         "enableTranslation": true,
         "nativeLanguage": "fr",
         "languages": ["fr"]
+    },
+    "generator-jhipster-opt": {
+        "promptValues": {
+            "gitPathGroup": "support/refauto"
+        }
     }
 }

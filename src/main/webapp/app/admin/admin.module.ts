@@ -1,24 +1,20 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 import { RefautoSharedModule } from 'app/shared';
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
-
 import {
     adminState,
     AuditsComponent,
-    UserMgmtComponent,
-    UserMgmtDetailComponent,
-    UserMgmtUpdateComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    JhiMetricsMonitoringComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
     JhiConfigurationComponent,
-    JhiDocsComponent
+    JhiDocsComponent,
+    JhiHealthCheckComponent,
+    JhiHealthModalComponent,
+    JhiMetricsMonitoringComponent,
+    LogsComponent
 } from './';
+
+/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 @NgModule({
     imports: [
@@ -28,10 +24,6 @@ import {
     ],
     declarations: [
         AuditsComponent,
-        UserMgmtComponent,
-        UserMgmtDetailComponent,
-        UserMgmtUpdateComponent,
-        UserMgmtDeleteDialogComponent,
         LogsComponent,
         JhiConfigurationComponent,
         JhiHealthCheckComponent,
@@ -39,8 +31,8 @@ import {
         JhiDocsComponent,
         JhiMetricsMonitoringComponent
     ],
+    entryComponents: [JhiHealthModalComponent],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RefautoAdminModule {

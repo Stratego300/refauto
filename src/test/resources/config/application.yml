@@ -108,3 +108,30 @@ jhipster:
 # ===================================================================
 
 # application:
+application:
+    front-end:
+        security-type: local
+        auth-url: https://auth-test.intranet.opt/
+    back-end:
+        app-url:
+
+# ===================================================================
+# OPT - Specific configuration
+#
+# Allows the user of different profiles based on configuration
+# - type "local" : user rights are fetched from this config file under "credentials"
+# - type "jwt" : user rights are decoded from the JWT token sent by the client
+# ===================================================================
+opt:
+    security:
+        type: local # can be "local" or "jwt"
+        credentials: # only used when type = local
+            users:
+                admin:
+                    login: admin
+                    nom: AD
+                    prenom: Min
+                    roles: ROLE_ADMIN,ROLE_USER
+                    ressources:
+                        ROLE_ADMIN: "ressource1"
+                        ROLE_USER: ""

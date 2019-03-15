@@ -14,10 +14,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test class for the SecurityUtils utility class.
- *
- * @see SecurityUtils
- */
+* Test class for the SecurityUtils utility class.
+*
+* @see SecurityUtils
+*/
 public class SecurityUtilsUnitTest {
 
     @Test
@@ -39,12 +39,30 @@ public class SecurityUtilsUnitTest {
     }
 
     @Test
+    public void testgetCurrentUserJWT_null() {
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(null);
+        SecurityContextHolder.setContext(securityContext);
+        Optional<String> jwt = SecurityUtils.getCurrentUserJWT();
+        assertThat(jwt.isPresent()).isFalse();
+    }
+
+    @Test
     public void testIsAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
         SecurityContextHolder.setContext(securityContext);
         boolean isAuthenticated = SecurityUtils.isAuthenticated();
         assertThat(isAuthenticated).isTrue();
+    }
+
+    @Test
+    public void testIsAuthenticated_false() {
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(null);
+        SecurityContextHolder.setContext(securityContext);
+        boolean isAuthenticated = SecurityUtils.isAuthenticated();
+        assertThat(isAuthenticated).isFalse();
     }
 
     @Test
@@ -70,4 +88,9 @@ public class SecurityUtilsUnitTest {
         assertThat(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)).isFalse();
     }
 
+    @Test
+    public void testIsCurrentUserInRole_false() {
+        assertThat(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.USER)).isFalse();
+        assertThat(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)).isFalse();
+    }
 }

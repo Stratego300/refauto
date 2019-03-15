@@ -1,11 +1,10 @@
 import './vendor.ts';
 
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { JhiEventManager, NgJhipsterModule } from 'ng-jhipster';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Ng2Webstorage } from 'ngx-webstorage';
-import { NgJhipsterModule } from 'ng-jhipster';
+import { LocalStorageService, Ng2Webstorage, SessionStorageService } from 'ngx-webstorage';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
@@ -15,11 +14,15 @@ import { RefautoSharedModule } from 'app/shared';
 import { RefautoCoreModule } from 'app/core';
 import { RefautoAppRoutingModule } from './app-routing.module';
 import { RefautoHomeModule } from './home/home.module';
-import { RefautoAccountModule } from './account/account.module';
 import { RefautoEntityModule } from './entities/entity.module';
-import * as moment from 'moment';
+import { ConfigurationService } from 'app/core/configuration/configuration.service';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { ActiveMenuDirective, ErrorComponent, FooterComponent, JhiMainComponent, NavbarComponent, PageRibbonComponent } from './layouts';
+
+export function configServiceFactory(config: ConfigurationService) {
+    return () => config.load();
+}
 
 @NgModule({
     imports: [
@@ -35,38 +38,45 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         RefautoSharedModule.forRoot(),
         RefautoCoreModule,
         RefautoHomeModule,
-        RefautoAccountModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
         RefautoEntityModule,
-        RefautoAppRoutingModule
+        RefautoAppRoutingModule,
+        LoadingBarHttpClientModule
+        // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
-            multi: true
+            multi: true,
+            deps: [LocalStorageService, SessionStorageService]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthExpiredInterceptor,
-            multi: true
+            multi: true,
+            deps: [Injector]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
-            multi: true
+            multi: true,
+            deps: [JhiEventManager]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
+            multi: true,
+            deps: [Injector]
+        },
+        ConfigurationService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: configServiceFactory,
+            deps: [ConfigurationService],
             multi: true
         }
     ],
     bootstrap: [JhiMainComponent]
 })
-export class RefautoAppModule {
-    constructor(private dpConfig: NgbDatepickerConfig) {
-        this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
-    }
-}
+export class RefautoAppModule {}

@@ -1,9 +1,7 @@
 package nc.opt.refauto.service;
-import nc.opt.refauto.config.Constants;
 
-import nc.opt.refauto.RefautoApp;
-import nc.opt.refauto.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
+import nc.opt.refauto.RefautoApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,67 +113,6 @@ public class MailServiceIntTest {
         assertThat(message.getContent()).isInstanceOf(Multipart.class);
         assertThat(aos.toString()).isEqualTo("\r\ntestContent");
         assertThat(part.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
-
-    @Test
-    public void testSendEmailFromTemplate() throws Exception {
-        User user = new User();
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        user.setLangKey("en");
-        mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getSubject()).isEqualTo("test title");
-        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
-        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(message.getContent().toString()).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n");
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
-
-    @Test
-    public void testSendActivationEmail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        mailService.sendActivationEmail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
-        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
-
-    @Test
-    public void testCreationEmail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        mailService.sendCreationEmail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
-        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
-    }
-
-    @Test
-    public void testSendPasswordResetMail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        mailService.sendPasswordResetMail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
-        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
     }
 
     @Test
