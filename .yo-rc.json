@@ -1,0 +1,37 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "nc.opt.refauto",
+            "nativeLanguage": "fr"
+        },
+        "jhipsterVersion": "5.8.2",
+        "applicationType": "monolith",
+        "baseName": "refauto",
+        "packageName": "nc.opt.refauto",
+        "packageFolder": "nc/opt/refauto",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "no",
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "postgresql",
+        "prodDatabaseType": "postgresql",
+        "searchEngine": "elasticsearch",
+        "messageBroker": false,
+        "serviceDiscoveryType": false,
+        "buildTool": "gradle",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "MTUyYzk1MGE0M2RlNzQwMWNjNGQ4M2JlZjg5YjYzYzEwNTdiNzdjN2M1MzIyMzY4ZmIwMzY0NGVmYzIzMDAyMmIxZDVlOWI0ZDZmMzYyMmJhZDE1NDRmMjM0YjI4MmE1NDg1Njk3Nzg0YzZjYTA5Y2U3NGM4MWFkNjZiMTQxMTQ=",
+        "clientFramework": "angularX",
+        "useSass": true,
+        "clientPackageManager": "yarn",
+        "testFrameworks": ["protractor"],
+        "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [],
+        "enableTranslation": true,
+        "nativeLanguage": "fr",
+        "languages": ["fr"]
+    }
+}
